@@ -41,20 +41,6 @@ spec:
                 - op: add
                   path: /spec/systemMasterUrl
                   value: "https://master.{{metadata.labels.cluster-domain}}"
-            - target:
-                kind: Secret
-                name: dev-tenant-secret
-              patch: |-
-                - op: add
-                  path: /stringData/adminURL
-                  value: "https://3scale-dev-admin.{{metadata.labels.cluster-domain}}"
-            #- target:
-            #    kind: Secret
-            #    name: uat-tenant-secret
-            #  patch: |-
-            #    - op: add
-            #      path: /stringData/adminURL
-            #      value: "https://3scale-uat-admin.{{metadata.labels.cluster-domain}}:443"
       destination:
         server: "{{server}}"
         namespace: "3scale"
