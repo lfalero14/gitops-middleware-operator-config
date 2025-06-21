@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: noprod-child-apicast-gateway-app-uat
+  namespace: openshift-gitops
+spec:
+  generators:
+    - clusters:
+        selector:
+          matchLabels:
+            env: noprod
+  template:
+    metadata:
+      name: "{{name}}-apicast-gateway-app-uat"
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/lfalero14/gitops-middleware-apicast-app.git
+        targetRevision: HEAD
+        path: "./overlays/noprod/uat"
+      destination:
+        server: "{{server}}"
+        namespace: "apicast-gateway"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
