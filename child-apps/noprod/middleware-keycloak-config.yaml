@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: noprod-child-keycloak-config
+  namespace: openshift-gitops
+spec:
+  generators:
+    - clusters:
+        selector:
+          matchLabels:
+            env: noprod
+  template:
+    metadata:
+      name: "{{name}}-keycloak-config"
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/lfalero14/gitops-middleware-keycloak-config.git
+        targetRevision: HEAD
+        path: "./overlays/noprod"
+        kustomize:
+          patches:
+            - target:
+                kind: Keycloak
+                name: keycloak
+              patch: |-
+                - op: add
+                  path: /spec/hostname/hostname
+                  value: "keycloak.{{metadata.labels.cluster-domain}}"
+      destination:
+        server: "{{server}}"
+        namespace: "keycloak"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
