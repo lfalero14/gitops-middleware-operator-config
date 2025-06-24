@@ -16,7 +16,7 @@ spec:
       project: default
       source:
         repoURL: https://github.com/lfalero14/gitops-middleware-3scale-config.git
-        targetRevision: HEAD
+        targetRevision: develop
         path: "./overlays/noprod"
         kustomize:
           patches:
