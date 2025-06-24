@@ -21,7 +21,7 @@ spec:
       destination:
         server: "{{server}}"
         namespace: "3scale"
-      syncPolicy:
-        automated:
-          prune: true
-          selfHeal: true
+      #syncPolicy:
+        #automated:
+          #prune: true
+          #selfHeal: true
