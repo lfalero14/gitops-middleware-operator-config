@@ -36,7 +36,7 @@ spec:
                   value: "https://master.{{metadata.labels.cluster-domain}}"
             - target:
                 kind: Tenant
-                name: 3scale-uat
+                name: 3scale-testing
               patch: |-
                 - op: add
                   path: /spec/systemMasterUrl
