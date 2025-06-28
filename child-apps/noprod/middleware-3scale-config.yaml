@@ -45,6 +45,6 @@ spec:
         server: "{{server}}"
         namespace: "3scale"
       #syncPolicy:
-        #automated:
-          #prune: true
-          #selfHeal: true
+      # automated:
+      #   prune: true
+      #   selfHeal: true
