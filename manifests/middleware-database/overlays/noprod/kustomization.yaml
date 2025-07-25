@@ -4,3 +4,4 @@ resources:
   - 3scale
   - keycloak
   - minio
+  - minio-bucket
