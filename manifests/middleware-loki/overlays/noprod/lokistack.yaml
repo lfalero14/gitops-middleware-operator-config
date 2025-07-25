@@ -10,7 +10,7 @@ spec:
       retention:
         days: 1 #change
   managementState: Managed
-  size: 1x.small
+  size: 1x.extra-small #change 1x.small
   storage:
     schemas:
       - effectiveDate: "2025-07-10"
