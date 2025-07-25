@@ -8,11 +8,13 @@ labels:
   - includeSelectors: false
     pairs:
       app.kubernetes.io/component: minio
+
 resources:
   - deployment.yaml
   - pvc.yaml
   - routes.yaml
   - secret.yaml
   - service.yaml
+
 commonAnnotations:
   argocd.argoproj.io/sync-wave: "0"
