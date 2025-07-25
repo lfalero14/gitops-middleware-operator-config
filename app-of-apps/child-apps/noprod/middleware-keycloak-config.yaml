@@ -15,7 +15,7 @@ spec:
     spec:
       project: default
       source:
-        repoURL: https://github.com/lfalero14/gitops-middleware-keycloak-config.git
+        repoURL: https://github.com/lfalero14/gitops-middleware-operator-config.git
         targetRevision: HEAD
         path: "./manifests/middleware-keycloak/overlays/noprod"
         kustomize:
