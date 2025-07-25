@@ -15,7 +15,7 @@ spec:
     spec:
       project: default
       source:
-        repoURL: https://github.com/lfalero14/gitops-middleware-database-config.git
+        repoURL: https://github.com/lfalero14/gitops-middleware-operator-config.git
         targetRevision: HEAD
         path: "./manifests/middleware-database/overlays/noprod"
       destination:
