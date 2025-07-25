@@ -3,4 +3,4 @@ kind: Kustomization
 resources:
   - 3scale-postgresql.yaml
   - 3scale-zync-postgresql.yaml
-  - 3scale-postgresql.yaml
+  - keycloak-postgresql.yaml
