@@ -6,4 +6,3 @@ resources:
   - keycloak
   - minio
   - minio-bucket
-  - application-local_role-binding.yaml #tmp
