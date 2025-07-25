@@ -5,15 +5,15 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "1"
 spec:
-  limits:
-    global:
-      retention:
-        days: 1 #change
+  # limits:
+  #   global:
+  #     retention:
+  #       days: 6
   managementState: Managed
-  size: 1x.extra-small #change 1x.small
+  size: 1x.demo #change 1x.small
   storage:
     schemas:
-      - effectiveDate: "2025-07-10"
+      - effectiveDate: "2025-01-01"
         version: v13
     secret:
       name: logging-loki-s3
