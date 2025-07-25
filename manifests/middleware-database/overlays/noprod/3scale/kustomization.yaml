@@ -3,3 +3,6 @@ kind: Kustomization
 resources:
   - 3scale-postgresql.yaml
   - 3scale-zync-postgresql.yaml
+
+commonAnnotations:
+  argocd.argoproj.io/sync-wave: "2"
