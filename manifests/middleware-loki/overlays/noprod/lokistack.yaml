@@ -18,7 +18,7 @@ spec:
     secret:
       name: logging-loki-s3
       type: s3
-  storageClassName: thin-csi
+  storageClassName: gp3-csi #change
   tenants:
     mode: openshift-logging
   # template:
