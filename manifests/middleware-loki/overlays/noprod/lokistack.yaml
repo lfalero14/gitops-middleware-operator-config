@@ -1,0 +1,80 @@
+apiVersion: loki.grafana.com/v1
+kind: LokiStack
+metadata:
+  name: logging-loki
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  limits:
+    global:
+      retention:
+        days: 1 #change
+  managementState: Managed
+  size: 1x.small
+  storage:
+    schemas:
+      - effectiveDate: "2025-07-10"
+        version: v13
+    secret:
+      name: logging-loki-s3
+      type: s3
+  storageClassName: thin-csi
+  tenants:
+    mode: openshift-logging
+  # template:
+  #   compactor:
+  #     nodeSelector:
+  #       node-role.kubernetes.io/infra: ""
+  #     tolerations:
+  #       - key: "node-role.kubernetes.io/infra"
+  #         operator: "Exists"
+  #         effect: "NoSchedule"
+  #   distributor:
+  #     nodeSelector:
+  #       node-role.kubernetes.io/infra: ""
+  #     tolerations:
+  #       - key: "node-role.kubernetes.io/infra"
+  #         operator: "Exists"
+  #         effect: "NoSchedule"
+  #   gateway:
+  #     nodeSelector:
+  #       node-role.kubernetes.io/infra: ""
+  #     tolerations:
+  #       - key: "node-role.kubernetes.io/infra"
+  #         operator: "Exists"
+  #         effect: "NoSchedule"
+  #   indexGateway:
+  #     nodeSelector:
+  #       node-role.kubernetes.io/infra: ""
+  #     tolerations:
+  #       - key: "node-role.kubernetes.io/infra"
+  #         operator: "Exists"
+  #         effect: "NoSchedule"
+  #   ingester:
+  #     nodeSelector:
+  #       node-role.kubernetes.io/infra: ""
+  #     tolerations:
+  #       - key: "node-role.kubernetes.io/infra"
+  #         operator: "Exists"
+  #         effect: "NoSchedule"
+  #   querier:
+  #     nodeSelector:
+  #       node-role.kubernetes.io/infra: ""
+  #     tolerations:
+  #       - key: "node-role.kubernetes.io/infra"
+  #         operator: "Exists"
+  #         effect: "NoSchedule"
+  #   queryFrontend:
+  #     nodeSelector:
+  #       node-role.kubernetes.io/infra: ""
+  #     tolerations:
+  #       - key: "node-role.kubernetes.io/infra"
+  #         operator: "Exists"
+  #         effect: "NoSchedule"
+  #   ruler:
+  #     nodeSelector:
+  #       node-role.kubernetes.io/infra: ""
+  #     tolerations:
+  #       - key: "node-role.kubernetes.io/infra"
+  #         operator: "Exists"
+  #         effect: "NoSchedule"
