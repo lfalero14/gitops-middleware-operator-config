@@ -8,5 +8,5 @@ type: Opaque
 stringData:
   access_key_id: "minio"
   access_key_secret: "minio123"
-  bucketnames: "observability-bucket"
+  bucket: "observability-bucket"
   endpoint: "http://minio-service.database.svc.cluster.local:9000"
