@@ -1,13 +1,13 @@
 apiVersion: opentelemetry.io/v1beta1
 kind: OpenTelemetryCollector
 metadata:
-  name: otel
+  name: otel-dev
   annotations:
     argocd.argoproj.io/sync-wave: "1"
 spec:
   mode: deployment
   managementState: managed
-  serviceAccount: otel-collector
+  serviceAccount: otel-collector-dev
 
   observability:
     metrics:
@@ -40,13 +40,6 @@ spec:
           http:
             endpoint: 0.0.0.0:4318
 
-    #processors:
-    #  batch: {}
-    #  memory_limiter:
-    #    check_interval: 1s
-    #    spike_limit_percentage: 30
-    #    limit_percentage: 50
-
     exporters:
       debug:
         verbosity: detailed
@@ -60,19 +53,9 @@ spec:
         headers:
           X-Scope-OrgID: "development"
 
-      otlp/testing:
-        endpoint: tempo-simplest-gateway.openshift-tempo-operator.svc.cluster.local:8090
-        tls:
-          insecure: false
-          ca_file: "/var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt"
-        auth:
-          authenticator: bearertokenauth
-        headers:
-          X-Scope-OrgID: "testing"
-
     service:
       extensions: [bearertokenauth]
       pipelines:
         traces:
           receivers: [otlp]
-          exporters: [debug, otlp/development, otlp/testing]
+          exporters: [debug, otlp/development]
