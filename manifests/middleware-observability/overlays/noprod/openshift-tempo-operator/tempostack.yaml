@@ -8,11 +8,11 @@ spec:
   retention:
     global:
       traces: 168h0m0s #Traces defines retention period. Supported parameter suffixes are "s", "m" and "h"
-  # observability:
+  observability:
   #   grafana:
   #     createDatasource: true
-  #   metrics:
-  #     createServiceMonitors: true
+     metrics:
+       createServiceMonitors: true
   search:
     defaultResultLimit: 20
     maxDuration: 0s
