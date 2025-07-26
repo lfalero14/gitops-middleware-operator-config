@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: noprod-child-observability-config
+  namespace: openshift-gitops
+spec:
+  generators:
+    - matrix:
+        generators:
+          - clusters:
+              selector:
+                matchLabels:
+                  env: noprod
+          - list:
+              elements:
+                - namespace: openshift-tempo-operator
+                - namespace: openshift-opentelemetry-operator
+  template:
+    metadata:
+      name: "{{name}}-observability-config"
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/lfalero14/gitops-middleware-operator-config.git
+        targetRevision: HEAD
+        path: "./manifests/middleware-observability/overlays/noprod"
+      destination:
+        server: "{{server}}"
+        namespace: "{{namespace}}"
+      #syncPolicy:
+      #  automated:
+      #  prune: true
+      #  selfHeal: true
+      #  allowEmpty: false
