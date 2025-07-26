@@ -16,13 +16,7 @@ spec:
   search:
     defaultResultLimit: 20
     maxDuration: 0s
-    tags:
-      - http.status_code
-      - http.method
-      - http.route
-      - http.target
-      - http.url
-      - service.name
+
   storageSize: 10Gi
   storage:
     secret:
