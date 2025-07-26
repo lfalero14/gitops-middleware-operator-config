@@ -4,3 +4,4 @@ resources:
   - otel-collector_sa.yaml
   - write-all_role.yaml
   - write-all_role-binding.yaml
+  - open-telemetry.yaml
