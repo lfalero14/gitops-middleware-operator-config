@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: observability-s3
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+type: Opaque
+stringData:
+  access_key_id: "minio"
+  access_key_secret: "minio123"
+  bucketnames: "observability-bucket"
+  endpoint: "http://minio-service.database.svc.cluster.local:9000"

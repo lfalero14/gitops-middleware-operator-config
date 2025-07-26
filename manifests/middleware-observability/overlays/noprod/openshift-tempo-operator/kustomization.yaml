@@ -1,0 +1,7 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - observability-s3.yaml
+  - get-all_role.yaml
+  - get-all_role-binding.yaml
+  - tempostack.yaml

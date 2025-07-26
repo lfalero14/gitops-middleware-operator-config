@@ -1,77 +1,77 @@
-apiVersion: loki.grafana.com/v1
-kind: LokiStack
+apiVersion: v1
+kind: ConfigMap
 metadata:
-  name: logging-loki
-  annotations:
-    argocd.argoproj.io/sync-wave: "1"
-spec:
-  # limits:
-  #   global:
-  #     retention:
-  #       days: 6
-  managementState: Managed
-  size: 1x.demo #change 1x.small
-  storage:
-    schemas:
-      - effectiveDate: "2025-01-01"
-        version: v13
-    secret:
-      name: logging-loki-s3
-      type: s3
-  storageClassName: gp3-csi #change
-  tenants:
-    mode: openshift-logging
-  template:
-    compactor:
+  name: cluster-monitoring-config
+data:
+  config.yaml: |
+    enableUserWorkload: true
+    
+    prometheusOperator:
       nodeSelector:
         node-role.kubernetes.io/infra: ""
       tolerations:
         - key: "node-role.kubernetes.io/infra"
           operator: "Exists"
           effect: "NoSchedule"
-    distributor:
+
+    prometheusK8s:
       nodeSelector:
         node-role.kubernetes.io/infra: ""
       tolerations:
         - key: "node-role.kubernetes.io/infra"
           operator: "Exists"
           effect: "NoSchedule"
-    gateway:
+      retention: 7d
+      volumeClaimTemplate:
+        metadata:
+          name: ocs-prometheus-claim
+        spec:
+          storageClassName: gp3-csi #change
+          resources:
+            requests:
+              storage: 120Gi
+
+    alertmanagerMain:
       nodeSelector:
         node-role.kubernetes.io/infra: ""
       tolerations:
         - key: "node-role.kubernetes.io/infra"
           operator: "Exists"
           effect: "NoSchedule"
-    indexGateway:
+      volumeClaimTemplate:
+        metadata:
+          name: ocs-alertmanager-claim
+        spec:
+          storageClassName: gp3-csi #change
+          resources:
+            requests:
+              storage: 10Gi
+
+    kubeStateMetrics:
       nodeSelector:
         node-role.kubernetes.io/infra: ""
       tolerations:
         - key: "node-role.kubernetes.io/infra"
           operator: "Exists"
           effect: "NoSchedule"
-    ingester:
+
+    telemeterClient:
       nodeSelector:
         node-role.kubernetes.io/infra: ""
       tolerations:
         - key: "node-role.kubernetes.io/infra"
           operator: "Exists"
           effect: "NoSchedule"
-    querier:
+
+    openshiftStateMetrics:
       nodeSelector:
         node-role.kubernetes.io/infra: ""
       tolerations:
         - key: "node-role.kubernetes.io/infra"
           operator: "Exists"
           effect: "NoSchedule"
-    queryFrontend:
-      nodeSelector:
-        node-role.kubernetes.io/infra: ""
-      tolerations:
-        - key: "node-role.kubernetes.io/infra"
-          operator: "Exists"
-          effect: "NoSchedule"
-    ruler:
+
+    thanosQuerier:
       nodeSelector:
         node-role.kubernetes.io/infra: ""
       tolerations:

@@ -1,0 +1,53 @@
+apiVersion: tempo.grafana.com/v1alpha1
+kind: TempoStack
+metadata:
+  name: simplest
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  retention:
+    global:
+      traces: 168h0m0s #Traces defines retention period. Supported parameter suffixes are "s", "m" and "h"
+  observability:
+    grafana:
+      createDatasource: true
+    metrics:
+      createServiceMonitors: true
+  search:
+    defaultResultLimit: 20
+    maxDuration: 0s
+  storageSize: 10Gi
+  storage:
+    secret:
+      name: observability-s3
+      type: s3
+  #resources:
+  #  total:
+  #    limits:
+  #      memory: 2Gi
+  #      cpu: 2000m
+  replicationFactor: 1
+  template:
+    gateway:
+      enabled: true
+    queryFrontend:
+      jaegerQuery:
+        enabled: true
+        monitorTab:
+          enabled: true
+          prometheusEndpoint: https://thanos-querier.openshift-monitoring.svc.cluster.local:9091
+        servicesQueryDuration: 168h0m0s
+        tempoQuery: {}
+        ingress:
+          route: {}
+        #ingress:
+        #  route:
+        #    termination: edge
+        #  type: route
+  tenants:
+    mode: openshift
+    authentication:
+      - tenantName: development
+        tenantId: "1610b0c3-c509-4592-a256-a1871353dbf1"
+      - tenantName: testing
+        tenantId: "1610b0c3-c509-4592-a256-a1871353dbf2"
