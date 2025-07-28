@@ -14,8 +14,8 @@ spec:
     metrics:
       createServiceMonitors: true
   search:
-    defaultResultLimit: 20
-    maxDuration: 0s
+    defaultResultLimit: 100
+    maxDuration: 168h0m0s
 
   storageSize: 10Gi
   storage:
@@ -29,22 +29,80 @@ spec:
   #      cpu: 2000m
   replicationFactor: 1
   template:
+    compactor:
+      replicas: 1
+      nodeSelector:
+        node-role.kubernetes.io/infra: ""
+      tolerations:
+        - key: "node-role.kubernetes.io/infra"
+          operator: "Exists"
+          effect: "NoSchedule"
+    distributor:
+      component:
+        replicas: 1
+        nodeSelector:
+          node-role.kubernetes.io/infra: ""
+        tolerations:
+          - key: "node-role.kubernetes.io/infra"
+            operator: "Exists"
+            effect: "NoSchedule"
+      tls:
+        enabled: false
     gateway:
+      component:
+        replicas: 1
+        nodeSelector:
+          node-role.kubernetes.io/infra: ""
+        tolerations:
+          - key: "node-role.kubernetes.io/infra"
+            operator: "Exists"
+            effect: "NoSchedule"
       enabled: true
+      ingress:
+        route:
+          termination: reencrypt
+        type: route
+      rbac:
+        enabled: false
+    ingester:
+      replicas: 1
+      nodeSelector:
+        node-role.kubernetes.io/infra: ""
+      tolerations:
+        - key: "node-role.kubernetes.io/infra"
+          operator: "Exists"
+          effect: "NoSchedule"
+    querier:
+      replicas: 1
+      nodeSelector:
+        node-role.kubernetes.io/infra: ""
+      tolerations:
+        - key: "node-role.kubernetes.io/infra"
+          operator: "Exists"
+          effect: "NoSchedule"
     queryFrontend:
+      component:
+        replicas: 1
+        nodeSelector:
+          node-role.kubernetes.io/infra: ""
+        tolerations:
+          - key: "node-role.kubernetes.io/infra"
+            operator: "Exists"
+            effect: "NoSchedule"
       jaegerQuery:
         enabled: true
-        monitorTab:
-          enabled: true
-          prometheusEndpoint: https://thanos-querier.openshift-monitoring.svc.cluster.local:9091
-        servicesQueryDuration: 168h0m0s
-        tempoQuery: {}
         ingress:
           route: {}
         #ingress:
         #  route:
         #    termination: edge
         #  type: route
+        monitorTab:
+          enabled: true
+          prometheusEndpoint: "https://thanos-querier.openshift-monitoring.svc.cluster.local:9091"
+        servicesQueryDuration: 168h0m0s
+        tempoQuery: {}
+
   tenants:
     mode: openshift
     authentication:
