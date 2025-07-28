@@ -3,5 +3,5 @@ kind: Kustomization
 bases:
   - ../../base
 resources:
-  - logging-loki-s3.yaml
+  - logging-loki-s3-sealed.yaml
   - lokistack.yaml
