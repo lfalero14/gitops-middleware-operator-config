@@ -5,6 +5,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "1"
 spec:
+  replicas: 2 #change
   mode: deployment
   managementState: managed
   serviceAccount: otel-collector-dev
@@ -13,19 +14,22 @@ spec:
     metrics:
       enableMetrics: true
 
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-          - matchExpressions:
-              - key: node-role.kubernetes.io/infra
-                operator: In
-                values:
-                  - ""
+  nodeSelector:
+    node-role.kubernetes.io/infra: ""
   tolerations:
     - key: "node-role.kubernetes.io/infra"
       operator: "Exists"
       effect: "NoSchedule"
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+              - key: node-role.kubernetes.io/infra
+                operator: In
+                values:
+                  - ""
+          topologyKey: kubernetes.io/hostname
 
   config:
     extensions:
