@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - sealed-secrets-controller_cluster-role-binding.yaml
+  - sealed-secrets-controller_role-binding.yaml
+  - sealed-secrets-controller_sa.yaml
+  - sealed-secrets-controller_service.yaml
+  - sealed-secrets-controller-metrics_service.yaml
+  - sealed-secrets-key-admin_role.yaml
+  - sealed-secrets-service-proxier_role-binding.yaml
+  - sealed-secrets-service-proxier_role.yaml
+  - sealedsecrets_crd.yaml
+  - secrets-unsealer_cluster-role.yaml
